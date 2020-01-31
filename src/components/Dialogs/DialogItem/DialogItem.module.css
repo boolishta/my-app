@@ -1,0 +1,10 @@
+.dialog{
+  font-size: 20px;
+  margin-top: 10px;
+}
+.dialog a:hover{
+  color: red;
+}
+.dialog a.activeLink{
+  color: red;
+}

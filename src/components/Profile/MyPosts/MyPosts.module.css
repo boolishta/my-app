@@ -1,0 +1,16 @@
+.posts{
+  margin: 10px;
+}
+.posts p{
+  font-size: 14px;
+  font-weight: bold;
+}
+textarea{
+  display: block;
+  resize: none;
+}
+.posts .button{
+  margin-top: 10px;
+  width: 100px;
+  height: 30px;
+}

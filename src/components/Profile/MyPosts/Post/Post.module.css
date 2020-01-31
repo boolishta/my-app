@@ -1,0 +1,25 @@
+.post{
+  margin-top: 15px;
+}
+.post .message{
+  display: flex;
+  align-items: center;
+}
+.post .message div{
+  display: flex;
+  padding-left: 10px;
+  border: .5px solid rgba(0, 0, 0, .4);
+  border-radius: 5px;
+  height: 30px;
+  width: 300px;
+  margin-left: 10px;
+  align-items: center;
+}
+.post .message img{
+  width: 50px;
+  border-radius: 50%;
+}
+.post div:last-child{
+  margin-top: 10px;
+  padding-left: 10px;
+}
