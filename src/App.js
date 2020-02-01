@@ -1,31 +1,38 @@
 import React from 'react';
-import './App.css';
-import Header from './components/Header/Header';
-import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
 import { Route } from 'react-router-dom';
-import Musics from './components/Musics/Music';
-import News from './components/News/News';
-import Settings from './components/Settings/Settings';
+import './App.css';
+import DialogsConstainer from './components/Dialogs/DialogsContainer';
 import Friends from './components/Friends/Friends';
+import Header from './components/Header/Header';
+import Musics from './components/Musics/Music';
+import Navbar from './components/Navbar/Navbar';
+import News from './components/News/News';
+import Profile from './components/Profile/Profile';
+import Settings from './components/Settings/Settings';
+import UsersContainer from './components/Users/UsersContainer';
 
 const App = (props) => {
 
-  return (
+  const dialogs = () => <DialogsConstainer store={props.store}/>;
+  const profile = () => <Profile store={props.store}/>;
+  const musics = () => <Musics />;
+  const news = () => <News />;
+  const settings = () => <Settings />;
+  const friends = () => <Friends store={props.store}/>; //сделать reducer
 
+  return (
+  /* если url совпадает то Route рендерит страницу */
       <div className='app-wrapper'>
         <Header />
         <Navbar />
         <div className='app-wrapper-content'>
-          <Route path='/dialogs' render={ () => <Dialogs dialogsPage={props.state.dialogsPage}
-                                                         dispatch={props.dispatch}/>} />
-          <Route path='/profile' render={() => <Profile profilePage={props.state.profilePage}
-                                                        dispatch={props.dispatch}/>} />
-          <Route path='/musics' render={() => <Musics />} />
-          <Route path='/news' render={() => <News />} />
-          <Route path='/settings' render={() => <Settings />} />
-          <Route path='/friends' render={() => <Friends state={props.state.friends}/>} />
+          <Route path='/dialogs' render={ dialogs } />
+          <Route path='/profile' render={ profile }/>
+          <Route path='/musics' render={ musics } />
+          <Route path='/news' render={ news } />
+          <Route path='/settings' render={ settings } />
+          <Route path='/friends' render={ friends } />
+          <Route path='/users' render={ () => <UsersContainer /> } />
         </div>
       </div>
 
