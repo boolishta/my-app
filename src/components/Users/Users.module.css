@@ -1,0 +1,12 @@
+.users span:first-child div:first-child img{
+  width: 50px;
+  margin-top: 10px;
+}
+.selectedPage{
+  font-weight: bold;
+  font-size: 18px;
+}
+.pagination{
+  cursor: pointer;
+  margin: 8px;
+}

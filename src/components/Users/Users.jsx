@@ -1,28 +1,45 @@
 import React from 'react';
 import style from './Users.module.css';
+import userPhoto from '../../assets/images/photo.png';
 
-let  Users  = (props) => {
+/* Презентационная компонента, только принимает пропсы и возвращает jsx разметку - чистая функция*/
+
+let Users = (props) => {
+
+  let pagesCount = Math.ceil(props.totalUsersCount / props.pagesSize);
+  let pages = [];
+  for(let i=1; i <= pagesCount; i++) {
+    pages.push(i);
+  }
+
   return (
     <div>
+      <div>
+        {pages.map( p => {
+
+          return <span className={`${props.currentPage === p && style.selectedPage} ${style.pagination}`}
+                        onClick={(e) => { props.onPageChanged(p); }}>{p}</span>
+                        })}
+      </div>
       {
-        props.users.map( u =>
+        props.users.map(u =>
           <div className={style.users} key={u.id}>
             <span>
               <div>
-                <img src={u.photoUrl} alt="avatar" width="50px" />
+                <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="avatar" />
               </div>
               <div>
-                {u.followed ? <button onClick={ () => {props.unfollow(u.id)}}>Unfollow</button> : <button onClick={ () => {props.follow(u.id)}}>Follow</button>} 
+                {u.followed ? <button onClick={() => { props.unfollow(u.id) }}>Unfollow</button> : <button onClick={() => { props.follow(u.id) }}>Follow</button>}
               </div>
             </span>
             <span>
               <span>
-                <div>{u.fullName}</div>
+                <div>{u.name}</div>
                 <div>{u.status}</div>
               </span>
               <span>
-                <div>{u.location.country}</div>
-                <div>{u.location.city}</div>
+                <div>{"u.location.country"}</div>
+                <div>{"u.location.city"}</div>
               </span>
             </span>
           </div>)
