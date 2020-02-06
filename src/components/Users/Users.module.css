@@ -8,5 +8,8 @@
 }
 .pagination{
   cursor: pointer;
-  margin: 8px;
+  width: 990px;
+}
+.pagination span{
+  margin: 7px;
 }

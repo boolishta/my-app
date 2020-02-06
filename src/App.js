@@ -2,7 +2,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
 import DialogsConstainer from './components/Dialogs/DialogsContainer';
-import Friends from './components/Friends/Friends';
 import Header from './components/Header/Header';
 import Musics from './components/Musics/Music';
 import Navbar from './components/Navbar/Navbar';
@@ -18,7 +17,6 @@ const App = (props) => {
   const musics = () => <Musics />;
   const news = () => <News />;
   const settings = () => <Settings />;
-  const friends = () => <Friends store={props.store}/>; //сделать reducer
 
   return (
   /* если url совпадает то Route рендерит страницу */
@@ -31,7 +29,6 @@ const App = (props) => {
           <Route path='/musics' render={ musics } />
           <Route path='/news' render={ news } />
           <Route path='/settings' render={ settings } />
-          <Route path='/friends' render={ friends } />
           <Route path='/users' render={ () => <UsersContainer /> } />
         </div>
       </div>
