@@ -1,20 +1,15 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 let initialState = {
-  users: [ ],
-  pagesSize: 5,
-  totalUsersCount: 0,
-  currentPage: 1,
-  isFetching: false
+  users: [
+    {id: 1, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR3OSh603dltQapzjU7bhajpK3nj6FaiawNO9o6xoHyPsmCU4LZ', followed: true, fullname: 'Ivanov Ivan', status:'fdfdfd', location: {city: 'Minsk', country: 'Belarus'}},
+    {id: 2, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR3OSh603dltQapzjU7bhajpK3nj6FaiawNO9o6xoHyPsmCU4LZ', followed: false, fullname: 'Ivanov Ivan', status:'ssssss', location: {city: 'London', country: 'UK'}},
+    {id: 3, photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR3OSh603dltQapzjU7bhajpK3nj6FaiawNO9o6xoHyPsmCU4LZ', followed: false, fullname: 'Ivanov Ivan', status:'aaaaa', location: {city: 'Tokyo', country: 'Japan'}},
+  ]
 };
 
-/* что то меняется в state через редьюсер */
-/* редьюсер принимает старый state и action и меняет state на основании action */
 const usersReducer = (state = initialState, action) => {
 
   switch(action.type) {
@@ -41,28 +36,15 @@ const usersReducer = (state = initialState, action) => {
         })
       }
     case SET_USERS: {
-      return { ...state, users: action.users } //делаем копию state и перезатираем users
-    }
-    case SET_CURRENT_PAGE: {
-      return { ...state, currentPage: action.currentPage }
-    }
-    case SET_TOTAL_USERS_COUNT: {
-      return { ...state, totalUsersCount: action.count }
-    }
-    case TOGGLE_IS_FETCHING: {
-      return { ...state, isFetching: action.isFetching }
+      return { ...state, users: [ ...state.users, ...action.users ] }
     }
     default:
       return state;
   }
 };
 
-export const followAC = (userId) => ({type: FOLLOW, userId }); //action creator возвращает объект
+export const followAC = (userId) => ({type: FOLLOW, userId }); //action creator
 export const unfollowAC = (userId) => ({ type: UNFOLLOW, userId });
-export const setUsersAC = (users) => ({ type: SET_USERS, users });
-export const setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage: currentPage }); //изменить текущую страницу
-export const setTotalUsersCountAC = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount }); //установить общее количество пользователей
-export const toggleIsFetchingAC = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching }); 
-
+export const setUsersAC = (userId) => ({ type: SET_USERS, userId });
 
 export default usersReducer;
