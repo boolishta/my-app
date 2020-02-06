@@ -2,7 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { followAC, unfollowAC, setUsersAC, setCurrentPageAC, setTotalUsersCountAC, toggleIsFetchingAC } from '../../redux/users-reducer';
+import { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/users-reducer';
 import Preloader from '../Command/Preloader/Preloader';
 
 
@@ -48,7 +48,7 @@ class UsersContainer extends React.Component {
   }
 };
 
-let mapStateToProps = (state) => { //пропсы для Users.jsx
+let mapStateToProps = (state) => { //пропсы для Users.jsx только те которые нужны
   return {
     users: state.usersPage.users,
     pagesSize: state.usersPage.pagesSize,
@@ -58,27 +58,30 @@ let mapStateToProps = (state) => { //пропсы для Users.jsx
   }
 };
 
-let mapDispatchToProps = (dispatch) => { //все колбэки которые диспатчат в state/store, объект создаем с помощью action creator
-  return {
-    follow: (userId) => {
-      dispatch(followAC(userId));
-    },
-    unfollow: (userId) => {
-      dispatch(unfollowAC(userId));
-    },
-    setUsers: (users) => {
-      dispatch(setUsersAC(users));
-    },
-    setCurrentPage: (pageNumber) => {
-      dispatch(setCurrentPageAC(pageNumber)); //диспатчим вызов AC: объект
-    },
-    setTotalUsersCount: (totalCount) => {
-      dispatch(setTotalUsersCountAC(totalCount))
-    },
-    toggleIsFetching: (isFetching) => {
-      dispatch(toggleIsFetchingAC(isFetching));
-    }
-  }
-};
+// let mapDispatchToProps = (dispatch) => {
+//   return {
+//     follow: (userId) => {
+//       dispatch(followAC(userId));
+//     },
+//     unfollow: (userId) => {
+//       dispatch(unfollowAC(userId));
+//     },
+//     setUsers: (users) => {
+//       dispatch(setUsersAC(users));
+//     },
+//     setCurrentPage: (pageNumber) => {
+//       dispatch(setCurrentPageAC(pageNumber)); //диспатчим вызов AC: объект
+//     },
+//     setTotalUsersCount: (totalCount) => {
+//       dispatch(setTotalUsersCountAC(totalCount))
+//     },
+//     toggleIsFetching: (isFetching) => {
+//       dispatch(toggleIsFetchingAC(isFetching));
+//     }
+//   }
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps) (UsersContainer);
+/* все колбэки которые диспатчат в state/store, объект создаем с помощью action creator и пропсами передаем в компоненту
+   mapDispatchToProps переписали и записали в коннект как объект */
+
+export default connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching }) (UsersContainer);
