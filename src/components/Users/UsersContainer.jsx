@@ -1,7 +1,7 @@
 import React from 'react';
-import Axios from 'axios';
-import Users from './Users';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
+<<<<<<< HEAD
 import { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/users-reducer';
 import Preloader from '../Command/Preloader/Preloader';
 
@@ -49,15 +49,25 @@ class UsersContainer extends React.Component {
 };
 
 let mapStateToProps = (state) => { //пропсы для Users.jsx только те которые нужны
+=======
+import { followAC, unfollowAC, setUsersAC } from '../../redux/users-reducer';
+import Users from './Users';
+
+let mapStateToProps = (state) => {
+>>>>>>> parent of 813c485... checkpoint2
+=======
+import { followAC, unfollowAC, setUsersAC } from '../../redux/users-reducer';
+import Users from './Users';
+
+let mapStateToProps = (state) => {
+>>>>>>> parent of 813c485... checkpoint2
   return {
-    users: state.usersPage.users,
-    pagesSize: state.usersPage.pagesSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching
+    users: state.usersPage.users
   }
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 // let mapDispatchToProps = (dispatch) => {
 //   return {
 //     follow: (userId) => {
@@ -85,3 +95,26 @@ let mapStateToProps = (state) => { //пропсы для Users.jsx только 
    mapDispatchToProps переписали и записали в коннект как объект */
 
 export default connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching }) (UsersContainer);
+=======
+=======
+>>>>>>> parent of 813c485... checkpoint2
+let mapDispatchToProps = (dispatch) => {
+  return {
+    follow: (userId) => {
+      dispatch(followAC(userId));
+    },
+    unfollow: (userId) => {
+      dispatch(unfollowAC(userId));
+    },
+    setUsers: (users) => {
+      dispatch(setUsersAC(users));
+    }
+  }
+};
+
+<<<<<<< HEAD
+export default connect(mapStateToProps, mapDispatchToProps) (Users);
+>>>>>>> parent of 813c485... checkpoint2
+=======
+export default connect(mapStateToProps, mapDispatchToProps) (Users);
+>>>>>>> parent of 813c485... checkpoint2
