@@ -11,7 +11,7 @@ import Preloader from '../Command/Preloader/Preloader';
 class UsersContainer extends React.Component {
   //запросы на сервер
   componentDidMount() { //данный метод вызывается сразу как компонента отрисуется (вставка в DOM)
-
+    
     this.props.toggleIsFetching(true); //когда посылаем запрос показываем индикатор загрузки
     Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pagesSize}`) //посылаем запрос на сервер
       .then(Response => {

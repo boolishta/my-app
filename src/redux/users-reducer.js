@@ -62,7 +62,7 @@ export const unfollow = (userId) => ({ type: UNFOLLOW, userId });
 export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage: currentPage }); //изменить текущую страницу
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount }); //установить общее количество пользователей
-export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching }); 
+export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
 
 
 export default usersReducer;

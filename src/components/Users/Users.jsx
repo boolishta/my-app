@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/photo.png';
+import { NavLink } from 'react-router-dom';
 
 /* Презентационная компонента, только принимает пропсы и возвращает jsx разметку - чистая функция*/
 
@@ -26,7 +27,10 @@ let Users = (props) => {
           <div className={style.users} key={u.id}>
             <span>
               <div>
-                <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="avatar" />
+                <NavLink to={'/profile/' + u.id}>
+                <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="avatar"
+                     className={style.userPhoto} />
+                </NavLink>
               </div>
               <div>
                 {u.followed ? <button onClick={() => { props.unfollow(u.id) }}>Unfollow</button> : <button onClick={() => { props.follow(u.id) }}>Follow</button>}
