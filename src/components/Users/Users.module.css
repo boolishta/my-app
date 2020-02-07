@@ -1,3 +1,6 @@
+.users{
+  margin-left: 10px;
+}
 .users span:first-child div:first-child img{
   width: 50px;
   margin-top: 10px;
@@ -7,6 +10,10 @@
   font-size: 18px;
 }
 .pagination{
+  width: 990px;
   cursor: pointer;
   margin: 8px;
+}
+.pagination span{
+  margin-right: 7px;
 }
