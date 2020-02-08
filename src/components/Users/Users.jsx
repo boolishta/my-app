@@ -1,8 +1,8 @@
 import React from 'react';
-import style from './Users.module.css';
-import userPhoto from '../../assets/images/photo.png';
 import { NavLink } from 'react-router-dom';
-import Axios from 'axios';
+import { usersAPI } from '../../api/api';
+import userPhoto from '../../assets/images/photo.png';
+import style from './Users.module.css';
 
 /* Презентационная компонента, только принимает пропсы и возвращает jsx разметку - чистая функция*/
 

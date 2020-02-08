@@ -1,10 +1,9 @@
-import React from 'react';
 import Axios from 'axios';
-import Users from './Users';
+import React from 'react';
 import { connect } from 'react-redux';
-import { usersAPI } from '../../api/api';
-import { follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow, toggleFollowProgress } from '../../redux/users-reducer';
+import { follow, setCurrentPage, setTotalUsersCount, setUsers, toggleFollowProgress, toggleIsFetching, unfollow } from '../../redux/users-reducer';
 import Preloader from '../Command/Preloader/Preloader';
+import Users from './Users';
 
 
 /* UsersAPIComponent - делает аякс запросы на сервер и отрисовывает презентационную компоненту */
