@@ -7,7 +7,6 @@ import Header from './Header';
 class HeaderContainer extends React.Component {
 
   componentDidMount() {
-    debugger
     usersAPI.getAuthLogin().then(Response => { //axios отдельной функцией
       if(Response.data.resultCode === 0) {
         let data = Response.data.data;
