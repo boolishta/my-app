@@ -3,6 +3,7 @@ import style from './Users.module.css';
 import userPhoto from '../../assets/images/photo.png';
 import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
+import { usersAPI } from '../../api/api';
 
 /* Презентационная компонента, только принимает пропсы и возвращает jsx разметку - чистая функция*/
 
@@ -37,28 +38,18 @@ let Users = (props) => {
                 {u.followed
                   ? <button onClick={() => {
 
-                    Axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                        withCredentials: true,
-                        headers: {
-                          "API-KEY": "6946ff38-638a-4018-ac8b-6ecca0f18517" //посылаем ключ вместе с запросом на сервер
-                        }
-                      }) //посылаем запрос на сервер, в delete запросе withCredentials посылаем ВТОРЫМ параметром
-                      .then(Response => {
-                        if(Response.data.resultCode === 0) { //если мы залогинины то диспачим
+                    usersAPI.getUnfollow(u) //axios вынесли отдельной функцией в отдельный файл
+                      .then(data => {
+                        if(data.resultCode === 0) { //если мы залогинины то диспачим
                           props.unfollow(u.id)
                         }
                        });
                 }}>Unfollow</button>
                   : <button onClick={() => {
 
-                      Axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                        withCredentials: true,
-                        headers: {
-                          "API-KEY": "6946ff38-638a-4018-ac8b-6ecca0f18517"
-                        }
-                      }) //посылаем запрос на сервер, в post запросе withCredentials посылаем ТРЕТЬИМ параметром
-                      .then(Response => {
-                        if(Response.data.resultCode === 0) { //если мы залогинины то диспачим
+                    usersAPI.getFollow(u)
+                      .then(data => {
+                        if(data.resultCode === 0) { //если мы залогинины то диспачим
                           props.follow(u.id);
                         }
                       });
