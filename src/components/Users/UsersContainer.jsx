@@ -1,33 +1,38 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { usersAPI } from '../../api/api';
-import { follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow } from '../../redux/users-reducer';
-import Preloader from '../Command/Preloader/Preloader';
+import Axios from 'axios';
 import Users from './Users';
+import { connect } from 'react-redux';
+import { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/users-reducer';
+import Preloader from '../Command/Preloader/Preloader';
 
 
-/* UsersAPIComponent - делает аякс запросы на сервер и отрисовывает презентационную компоненту
-    Аякс запросы передали функции getUsers и вынесли в отдельный файл */
+/* UsersAPIComponent - делает аякс запросы на сервер и отрисовывает презентационную компоненту */
 
 class UsersContainer extends React.Component {
   //запросы на сервер
   componentDidMount() { //данный метод вызывается сразу как компонента отрисуется (вставка в DOM)
     this.props.toggleIsFetching(true); //когда посылаем запрос показываем индикатор загрузки
-    usersAPI.getUsers(this.props.currentPage, this.props.pagesSize).then(data => { //перенесли Axios в отдельную функцию, через параметры передаем из
-                                                                              //пропсов currentPage и pagesSize, в Response передали только data
-            this.props.toggleIsFetching(false); //когда получаем ответ убираем индикатор загрузки
-            this.props.setUsers(data.items); //отправляем из компоненты в state с помощью setUsers которая приходит через пропсы из mapDisatchToProps
-            this.props.setTotalUsersCount(data.totalCount); //отправляем из компоненты в state
-          });
+    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pagesSize}`,
+      {
+        withCredentials: true
+      }) //посылаем запрос на сервер
+      .then(Response => {
+        this.props.toggleIsFetching(false); //когда получаем ответ убираем индикатор загрузки
+        this.props.setUsers(Response.data.items); //отправляем из компоненты в state с помощью setUsers которая приходит через пропсы из mapDisatchToProps
+        this.props.setTotalUsersCount(Response.data.totalCount); //отправляем из компоненты в state
+      });
   }
 
   onPageChanged = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsFetching(true);
-
-    usersAPI.getUsers(pageNumber, this.props.pagesSize).then(data => {
+    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pagesSize}`,
+      {
+        withCredentials: true
+      }) //посылаем запрос на сервер
+    .then(Response => {
       this.props.toggleIsFetching(false);
-      this.props.setUsers(data.items);
+      this.props.setUsers(Response.data.items);
     });
   }
 

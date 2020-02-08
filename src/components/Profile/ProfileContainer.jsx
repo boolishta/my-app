@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { usersAPI } from '../../api/api';
-import { setUserProfile } from '../../redux/profile-reducer';
 import Profile from './Profile';
+import Axios from 'axios';
+import { connect } from 'react-redux';
+import { setUserProfile } from '../../redux/profile-reducer';
+import { withRouter } from 'react-router-dom';
 
 //создаем контейнерную компоненту, которая будет слать запросы на сервер
 //передаем все пропсы дальше в другую компоненту
@@ -16,7 +16,7 @@ class ProfileContainer extends React.Component {
     if(!userId) {
       userId = 5890; //id на сервере
     }
-    usersAPI.getAuthMe(userId) //axios вынесли в отдельную функцию
+    Axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId) //посылаем запрос на сервер
       .then(Response => { //в Response.data приходит объект
         this.props.setUserProfile(Response.data); //отправляем из компоненты в state с помощью setProfile которая приходит через пропсы из mapDisatchToProps
       });
