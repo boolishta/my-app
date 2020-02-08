@@ -2,6 +2,7 @@ import React from 'react';
 import style from './Users.module.css';
 import userPhoto from '../../assets/images/photo.png';
 import { NavLink } from 'react-router-dom';
+import Axios from 'axios';
 
 /* Презентационная компонента, только принимает пропсы и возвращает jsx разметку - чистая функция*/
 
@@ -33,7 +34,36 @@ let Users = (props) => {
                 </NavLink>
               </div>
               <div>
-                {u.followed ? <button onClick={() => { props.unfollow(u.id) }}>Unfollow</button> : <button onClick={() => { props.follow(u.id) }}>Follow</button>}
+                {u.followed
+                  ? <button onClick={() => {
+
+                    Axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                        withCredentials: true,
+                        headers: {
+                          "API-KEY": "6946ff38-638a-4018-ac8b-6ecca0f18517" //посылаем ключ вместе с запросом на сервер
+                        }
+                      }) //посылаем запрос на сервер, в delete запросе withCredentials посылаем ВТОРЫМ параметром
+                      .then(Response => {
+                        if(Response.data.resultCode === 0) { //если мы залогинины то диспачим
+                          props.unfollow(u.id)
+                        }
+                       });
+                }}>Unfollow</button>
+                  : <button onClick={() => {
+
+                      Axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                        withCredentials: true,
+                        headers: {
+                          "API-KEY": "6946ff38-638a-4018-ac8b-6ecca0f18517"
+                        }
+                      }) //посылаем запрос на сервер, в post запросе withCredentials посылаем ТРЕТЬИМ параметром
+                      .then(Response => {
+                        if(Response.data.resultCode === 0) { //если мы залогинины то диспачим
+                          props.follow(u.id);
+                        }
+                      });
+
+                    }}>Follow</button>}
               </div>
             </span>
             <span>

@@ -14,7 +14,7 @@ class ProfileContainer extends React.Component {
     /* в App.js в Route в path добавили параметр userId который отображается в props.match.params.userId */
     let userId = this.props.match.params.userId;
     if(!userId) {
-      userId = 2;
+      userId = 5890; //id на сервере
     }
     Axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId) //посылаем запрос на сервер
       .then(Response => { //в Response.data приходит объект
@@ -22,7 +22,6 @@ class ProfileContainer extends React.Component {
       });
   }
   render() {
-    
     return (
       <Profile {...this.props} profile={this.props.profile}/>
     )

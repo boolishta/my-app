@@ -11,9 +11,11 @@ import Preloader from '../Command/Preloader/Preloader';
 class UsersContainer extends React.Component {
   //запросы на сервер
   componentDidMount() { //данный метод вызывается сразу как компонента отрисуется (вставка в DOM)
-    
     this.props.toggleIsFetching(true); //когда посылаем запрос показываем индикатор загрузки
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pagesSize}`) //посылаем запрос на сервер
+    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pagesSize}`,
+      {
+        withCredentials: true
+      }) //посылаем запрос на сервер
       .then(Response => {
         this.props.toggleIsFetching(false); //когда получаем ответ убираем индикатор загрузки
         this.props.setUsers(Response.data.items); //отправляем из компоненты в state с помощью setUsers которая приходит через пропсы из mapDisatchToProps
@@ -24,7 +26,10 @@ class UsersContainer extends React.Component {
   onPageChanged = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsFetching(true);
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pagesSize}`) //посылаем запрос на сервер
+    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pagesSize}`,
+      {
+        withCredentials: true
+      }) //посылаем запрос на сервер
     .then(Response => {
       this.props.toggleIsFetching(false);
       this.props.setUsers(Response.data.items);
