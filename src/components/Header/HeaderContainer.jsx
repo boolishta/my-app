@@ -7,15 +7,12 @@ import { setAuthUserData } from '../../redux/auth-reducer';
 class HeaderContainer extends React.Component {
 
   componentDidMount() {
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-      withCredentials: true
-    }) //посылаем запрос на сервер, вторым параметром отправляем куки
-      .then(Response => {
-        if(Response.data.resultCode === 0) {
-          let data = Response.data.data;
-          this.props.setAuthUserData(data);
-        }
-      });
+    usersAPI.getAuthLogin().then(Response => { //axios отдельной функцией
+      if(Response.data.resultCode === 0) {
+        let data = Response.data.data;
+        this.props.setAuthUserData(data);
+      }
+    });
   }
 
   render () {
