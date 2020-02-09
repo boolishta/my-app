@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const SET_USER_DATA = 'SET_USER_DATA';
 
 let initialState = {
@@ -27,4 +29,15 @@ export const setAuthUserData = (data) => {
   return { type: SET_USER_DATA, data: data }
 }
 
+//thunk
+export const getMyLogin = () => {
+  return (dispatch) => {
+    usersAPI.getAuthLogin().then(Response => { //axios отдельной функцией
+      if(Response.data.resultCode === 0) {
+        let data = Response.data.data;
+        dispatch(setAuthUserData(data));
+      }
+    });
+  }
+}
 export default authReducer;

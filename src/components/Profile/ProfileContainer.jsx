@@ -1,9 +1,9 @@
 import React from 'react';
-import Profile from './Profile';
-import Axios from 'axios';
 import { connect } from 'react-redux';
-import { setUserProfile } from '../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
+import { usersAPI } from '../../api/api';
+import { setUserProfile, getProfile } from '../../redux/profile-reducer';
+import Profile from './Profile';
 
 //создаем контейнерную компоненту, которая будет слать запросы на сервер
 //передаем все пропсы дальше в другую компоненту
@@ -16,10 +16,7 @@ class ProfileContainer extends React.Component {
     if(!userId) {
       userId = 5890; //id на сервере
     }
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId) //посылаем запрос на сервер
-      .then(Response => { //в Response.data приходит объект
-        this.props.setUserProfile(Response.data); //отправляем из компоненты в state с помощью setProfile которая приходит через пропсы из mapDisatchToProps
-      });
+    this.props.getProfile(userId); //реализовали через thunk из пропсов в profile-reduser
   }
   render() {
     return (
@@ -36,4 +33,4 @@ let mapStateToProps = (state) => ({
 let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
 //оборачиваем WithUrlDataContainerComponent в коннект, которая закидывает и получает данные из store
-export default connect (mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);
+export default connect (mapStateToProps, {setUserProfile, getProfile}) (WithUrlDataContainerComponent);

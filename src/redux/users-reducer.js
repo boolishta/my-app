@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -66,13 +68,51 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const follow = (userId) => ({type: FOLLOW, userId }); //action creator возвращает объект
-export const unfollow = (userId) => ({ type: UNFOLLOW, userId });
+export const followSuccess = (userId) => ({type: FOLLOW, userId }); //action creator возвращает объект
+export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId });
 export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage: currentPage }); //изменить текущую страницу
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount }); //установить общее количество пользователей
 export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
 export const toggleFollowProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId }); //дисаблим кнопку folow/unfollow
 
+//создаем thunk
+export const getUsers = (currentPage, pagesSize) => {
+  return (dispatch) => {
+    dispatch(toggleIsFetching(true)); //когда посылаем запрос показываем индикатор загрузки
+    /* axios вынесли отдельной функцией в api.js */
+    usersAPI.getUsers(currentPage, pagesSize).then(data => {
+      dispatch(toggleIsFetching(false)); //когда получаем ответ убираем индикатор загрузки
+      dispatch(setUsers(data.items)); //отправляем из компоненты в state с помощью setUsers которая приходит через пропсы из mapDisatchToProps
+      dispatch(setTotalUsersCount(data.totalCount)); //отправляем из компоненты в state
+    });
+  }
+}
+
+export const follow = (usesrId) => {
+  return (dispatch) => {
+    dispatch(toggleFollowProgress(true, usesrId));
+    usersAPI.getFollow(usesrId)
+      .then(data => {
+        if(data.resultCode === 0) { //если мы залогинины то диспачим
+          dispatch(followSuccess(usesrId));
+        }
+        dispatch(toggleFollowProgress(false, usesrId));
+    });
+  }
+}
+
+export const unfollow = (usesrId) => {
+  return (dispatch) => {
+    dispatch(toggleFollowProgress(true, usesrId));
+    usersAPI.getUnfollow(usesrId)
+      .then(data => {
+        if(data.resultCode === 0) { //если мы залогинины то диспачим
+          dispatch(unfollowSuccess(usesrId));
+        }
+        dispatch(toggleFollowProgress(false, usesrId));
+    });
+  }
+}
 
 export default usersReducer;

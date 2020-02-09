@@ -35,27 +35,12 @@ let Users = (props) => {
               </div>
               <div>
                 {u.followed
-                  ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => { //если в массиве followingInProgress хоть одна id совпадает с id пользователя то дисэблим
-                    props.toggleFollowProgress(true, u.id); //перед запросом диспатчим true
-                    usersAPI.getUnfollow(u) //axios вынесли отдельной функцией в отдельный файл
-                      .then(data => {
-                        if(data.resultCode === 0) { //если мы залогинины то диспачим
-                          props.unfollow(u.id)
-                        }
-                        props.toggleFollowProgress(false, u.id); //по окончании асинхронного запроса диспатчим false
-                       });
-                }}>Unfollow</button>
-                  : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                    props.toggleFollowProgress(true, u.id);
-                    usersAPI.getFollow(u)
-                      .then(data => {
-                        if(data.resultCode === 0) { //если мы залогинины то диспачим
-                          props.follow(u.id);
-                        }
-                        props.toggleFollowProgress(false, u.id);
-                      });
-
-                    }}>Follow</button>}
+                  ? <button disabled={props.followingInProgress.some(id => id === u.id)}
+                            onClick={() => { props.unfollow(u.id);}}>
+                    Unfollow</button>
+                  : <button disabled={props.followingInProgress.some(id => id === u.id)}
+                            onClick={() => { props.follow(u.id);}}>
+                    Follow</button>}
               </div>
             </span>
             <span>

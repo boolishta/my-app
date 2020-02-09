@@ -1,7 +1,6 @@
-import Axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, setCurrentPage, setTotalUsersCount, setUsers, toggleFollowProgress, toggleIsFetching, unfollow } from '../../redux/users-reducer';
+import { follow, setCurrentPage, toggleFollowProgress, unfollow, getUsers } from '../../redux/users-reducer';
 import Preloader from '../Command/Preloader/Preloader';
 import Users from './Users';
 
@@ -11,29 +10,11 @@ import Users from './Users';
 class UsersContainer extends React.Component {
   //запросы на сервер
   componentDidMount() { //данный метод вызывается сразу как компонента отрисуется (вставка в DOM)
-    this.props.toggleIsFetching(true); //когда посылаем запрос показываем индикатор загрузки
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pagesSize}`,
-      {
-        withCredentials: true
-      }) //посылаем запрос на сервер
-      .then(Response => {
-        this.props.toggleIsFetching(false); //когда получаем ответ убираем индикатор загрузки
-        this.props.setUsers(Response.data.items); //отправляем из компоненты в state с помощью setUsers которая приходит через пропсы из mapDisatchToProps
-        this.props.setTotalUsersCount(Response.data.totalCount); //отправляем из компоненты в state
-      });
+    this.props.getUsers(this.props.currentPage, this.props.pagesSize);
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.setCurrentPage(pageNumber);
-    this.props.toggleIsFetching(true);
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pagesSize}`,
-      {
-        withCredentials: true
-      }) //посылаем запрос на сервер
-    .then(Response => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(Response.data.items);
-    });
+    this.props.getUsers(pageNumber, this.props.pagesSize);
   }
 
   render() {
@@ -43,14 +24,13 @@ class UsersContainer extends React.Component {
       { this.props.isFetching ?
       <Preloader /> : null }
       <Users totalUsersCount={this.props.totalUsersCount}
-                    pagesSize={this.props.pagesSize}
-                    currentPage={this.props.currentPage}
-                    onPageChanged={this.onPageChanged}
-                    users={this.props.users}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
-                    toggleFollowProgress={this.props.toggleFollowProgress}
-                    followingInProgress={this.props.followingInProgress}/>
+            pagesSize={this.props.pagesSize}
+            currentPage={this.props.currentPage}
+            onPageChanged={this.onPageChanged}
+            users={this.props.users}
+            follow={this.props.follow}
+            unfollow={this.props.unfollow}
+            followingInProgress={this.props.followingInProgress}/>
     </>
   }
 };
@@ -79,4 +59,5 @@ let mapStateToProps = (state) => { //пропы для Users.jsx, берем т�
 
 
 //вместо функции mapDispatchToProps передаем объекты, функция connect сама создает mdtp
-export default connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowProgress }) (UsersContainer);
+export default connect(mapStateToProps,
+  { follow, unfollow, setCurrentPage, toggleFollowProgress, getUsers }) (UsersContainer);
