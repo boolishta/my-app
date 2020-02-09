@@ -10,11 +10,12 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import Login from './components/Login/Login';
 
 const App = (props) => {
 
   return (
-  /* если url совпадает то Route рендерит страницу 
+  /* если url совпадает то Route рендерит страницу
     в path можно добавить параметры */
       <div className='app-wrapper'>
         <HeaderContainer />
@@ -27,6 +28,7 @@ const App = (props) => {
           <Route path='/settings'           render={ () => <Settings /> } />
           <Route path='/friends'            render={ () => <Friends /> } />
           <Route path='/users'              render={ () => <UsersContainer /> } />
+          <Route path='/login'              render={ () => <Login /> } />
         </div>
       </div>
 
