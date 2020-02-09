@@ -52,14 +52,12 @@ export const addUpdateNewPostTextActionCreator = (text) => ({ type: UPDATE_NEW_P
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 
 //thunk
-export const getProfile = (userId) => {
+export const getUserProfile = (userId) => {
   return (dispatch) => {
-    usersAPI.getAuthMe(userId).then(Response => { //в Response.data приходит объект
+    usersAPI.getProfile(userId).then(Response => { //в Response.data приходит объект
       dispatch(setUserProfile(Response.data)); //отправляем из компоненты в state с помощью setProfile которая приходит через пропсы из mapDisatchToProps
     });
   }
 }
-
-
 
 export default profileReducer;

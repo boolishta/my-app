@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { usersAPI } from '../../api/api';
-import { setUserProfile, getProfile } from '../../redux/profile-reducer';
+import { getUserProfile } from '../../redux/profile-reducer';
 import Profile from './Profile';
 
 //создаем контейнерную компоненту, которая будет слать запросы на сервер
@@ -16,7 +15,7 @@ class ProfileContainer extends React.Component {
     if(!userId) {
       userId = 5890; //id на сервере
     }
-    this.props.getProfile(userId); //реализовали через thunk из пропсов в profile-reduser
+    this.props.getUserProfile(userId); //реализовали через thunk из пропсов в profile-reduser
   }
   render() {
     return (
@@ -33,4 +32,4 @@ let mapStateToProps = (state) => ({
 let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
 //оборачиваем WithUrlDataContainerComponent в коннект, которая закидывает и получает данные из store
-export default connect (mapStateToProps, {setUserProfile, getProfile}) (WithUrlDataContainerComponent);
+export default connect (mapStateToProps, { getUserProfile }) (WithUrlDataContainerComponent);

@@ -25,11 +25,14 @@ export const usersAPI = {
       return Response.data
     })
   },
-  getAuthLogin() { //если залогинин то сетаем данные
-    return instance.get(`auth/me`)
-  },
-  getAuthMe(userId) { //получаем данные для вывода на profile
+  getProfile(userId) { //получаем данные для вывода на profile
     return instance.get(`profile/` + userId)
   }
+}
+
+export const authAPI = {
+  getMe() { //если залогинин то сетаем данные
+    return instance.get(`auth/me`)
+  },
 }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getMyLogin, setAuthUserData } from '../../redux/auth-reducer';
+import { getAuthUserData } from '../../redux/auth-reducer';
 import Header from './Header';
 
 class HeaderContainer extends React.Component {
 
   componentDidMount() {
-    this.props.getMyLogin(); //thunki
+    this.props.getAuthUserData(); //thunki
   }
 
   render () {
@@ -19,5 +19,5 @@ const mapStateToProps = (state) => ({
   login: state.auth.login
 });
 
-export default connect(mapStateToProps, {setAuthUserData, getMyLogin}) (HeaderContainer);
+export default connect(mapStateToProps, { getAuthUserData}) (HeaderContainer);
 

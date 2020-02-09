@@ -1,4 +1,4 @@
-import { usersAPI } from "../api/api";
+import { authAPI } from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -30,14 +30,13 @@ export const setAuthUserData = (data) => {
 }
 
 //thunk
-export const getMyLogin = () => {
-  return (dispatch) => {
-    usersAPI.getAuthLogin().then(Response => { //axios отдельной функцией
+export const getAuthUserData = () => (dispatch) => { //функция которая возвращает другую функцию
+    authAPI.getMe().then(Response => { //axios отдельной функцией
       if(Response.data.resultCode === 0) {
         let data = Response.data.data;
         dispatch(setAuthUserData(data));
       }
     });
-  }
 }
+
 export default authReducer;
