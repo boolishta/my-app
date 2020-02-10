@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { follow, setCurrentPage, toggleFollowProgress, unfollow, getUsers } from '../../redux/users-reducer';
 import Preloader from '../Command/Preloader/Preloader';
 import Users from './Users';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 
 /* UsersAPIComponent - делает аякс запросы на сервер и отрисовывает презентационную компоненту */
@@ -47,7 +49,7 @@ let mapStateToProps = (state) => { //пропы для Users.jsx, берем т�
   }
 };
 
-/* let mapDispatchToProps = (dispatch) => { // пропсы, все колбэки которые диспатчат в state/store, объект создаем с помощью action creator
+  /* let mapDispatchToProps = (dispatch) => { // пропсы, все колбэки которые диспатчат в state/store, объект создаем с помощью action creator
   return {
     follow: (userId) => { dispatch(followAC(userId)); },
     unfollow: (userId) => { dispatch(unfollowAC(userId)); },
@@ -58,6 +60,9 @@ let mapStateToProps = (state) => { //пропы для Users.jsx, берем т�
   }}; */
 
 
-//вместо функции mapDispatchToProps передаем объекты, функция connect сама создает mdtp
-export default connect(mapStateToProps,
-  { follow, unfollow, setCurrentPage, toggleFollowProgress, getUsers }) (UsersContainer);
+/* с помощью compose добавляем процессы, обработчики к UsersContainer */
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps,
+    { follow, unfollow, setCurrentPage, toggleFollowProgress, getUsers })
+) (UsersContainer)
