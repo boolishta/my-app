@@ -13,10 +13,8 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 
 const App = (props) => {
-
   return (
-  /* если url совпадает то Route рендерит страницу
-    в path можно добавить параметры */
+  /* если url совпадает то Route рендерит страницу в path можно добавить параметры */
       <div className='app-wrapper'>
         <HeaderContainer />
         <Navbar />
