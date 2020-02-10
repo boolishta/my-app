@@ -26,7 +26,20 @@ export const usersAPI = {
     })
   },
   getProfile(userId) { //получаем данные для вывода на profile
+    return profileAPI.getProfile(userId)
+  }
+}
+
+export const profileAPI = {
+  getProfile(userId) { //получаем данные для вывода на profile
     return instance.get(`profile/` + userId)
+  },
+  getStatus(userId) {
+    return instance.get(`profile/status/` + userId)
+  },
+  updateStatus(status) {
+    return instance.put(`profile/status`, { status: status})
+
   }
 }
 

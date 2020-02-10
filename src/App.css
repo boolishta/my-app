@@ -21,8 +21,6 @@ a{
 }
 .app-wrapper-content{
   grid-area: content;
-  border: .5px solid red;
-  border-radius: 8px;
   height: 100%;
 }
 

@@ -16,8 +16,7 @@
   align-items: center;
 }
 .post .message img{
-  width: 50px;
-  border-radius: 50%;
+  width: 60px;
 }
 .post div:last-child{
   margin-top: 10px;

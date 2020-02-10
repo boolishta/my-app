@@ -1,4 +1,4 @@
-.profileInfo div, .profileInfo textarea{
+.profileInfo{
   margin-left: 10px;
 }
 .wall{
@@ -9,4 +9,12 @@
 }
 .avatar{
   width: 300px;
+}
+.profile{
+  display: flex;
+}
+.profileDescription{
+  margin-top: 15px;
+  margin-left: 40px;
+  font-size: 18px;
 }

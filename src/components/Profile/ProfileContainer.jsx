@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { getUserProfile } from '../../redux/profile-reducer';
+import { getStatus, getUserProfile, updateStatus } from '../../redux/profile-reducer';
 import Profile from './Profile';
 
 //создаем контейнерную компоненту, которая будет слать запросы на сервер
@@ -18,20 +17,22 @@ class ProfileContainer extends React.Component {
       userId = 5890; //id на сервере
     }
     this.props.getUserProfile(userId); //реализовали через thunk из пропсов в profile-reduser
+    this.props.getStatus(userId);
   }
   render() {
     return (
-      <Profile {...this.props} profile={this.props.profile}/>
+      <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
     )
   }
 }
 
 let mapStateToProps = (state) => ({
-  profile: state.profilePage.profile
+  profile: state.profilePage.profile,
+  status: state.profilePage.status
 })
 
   /* ProfileContainer прокидываем в  withAuthRedirect и затем дальше вверх*/
 export default compose(
-  connect (mapStateToProps, { getUserProfile }),
+  connect (mapStateToProps, { getUserProfile, getStatus, updateStatus }),
   withRouter,
 ) (ProfileContainer);
