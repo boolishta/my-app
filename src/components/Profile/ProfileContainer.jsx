@@ -14,21 +14,26 @@ class ProfileContainer extends React.Component {
     /* в App.js в Route в path добавили параметр userId который отображается в props.match.params.userId */
     let userId = this.props.match.params.userId;
     if(!userId) {
-      userId = 5890; //свой id на сервере
+      userId = this.props.autorizedUserId; //мой id из state
     }
     this.props.getUserProfile(userId); //реализовали через thunk из пропсов в profile-reduser
     this.props.getStatus(userId);
   }
   render() {
     return (
-      <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
+      <Profile {...this.props}
+              profile={this.props.profile}
+              status={this.props.status}
+              updateStatus={this.props.updateStatus}/>
     )
   }
 }
 
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
-  status: state.profilePage.status
+  status: state.profilePage.status,
+  autorizedUserId: state.auth.userId,
+  isAuth: state.auth.isAuth
 })
 
   /* ProfileContainer прокидываем в  withAuthRedirect и затем дальше вверх*/

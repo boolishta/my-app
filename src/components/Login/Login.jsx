@@ -5,6 +5,7 @@ import { required } from '../../utils/validators/validator';
 import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer';
 import { Redirect } from 'react-router-dom';
+import style from '../common/FormsControls/FormsControls.module.css'
 
 const LoginForm = (props) => {
   return (
@@ -21,12 +22,13 @@ const LoginForm = (props) => {
       <div><Field name={"rememberMe"}
                   component={Input}
                   type={"checkbox"}/> remember me </div>
+      { props.error && <div className={style.formSummaryError}> {props.error} </div> }
       <div><button>Login</button></div>
     </form>)
 }
 
 /* контейнерная компонента формируемая с помощью reduxForm */
-const LoginReduxForm = reduxForm({form: 'login'}) (LoginForm)
+const LoginReduxForm = reduxForm({form: 'login'}) (LoginForm) //в form название формы
 
 const Login = (props) => {
   const onSubmit = (formData) => { //собирает данные из формы логин пароль rememberMe

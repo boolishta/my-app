@@ -1,4 +1,5 @@
 import { authAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -31,7 +32,7 @@ export const setAuthUserData = (userId, email, login, isAuth) => {
 //thunk
 export const getAuthUserData = () => (dispatch) => { //функция возвращает другую функцию которая принимает метод диспатч
     authAPI.getMe().then(Response => { //axios отдельной функцией
-      if(Response.data.resultCode === 0) {
+      if(Response.data.resultCode === 0) { //если мы авторизованы то записываем данные id login email
         let {id, login, email} = Response.data.data;
         dispatch(setAuthUserData(id, email, login, true));
       }
@@ -42,6 +43,10 @@ export const login = (email, password, rememberMe) => (dispatch) => { //функ
   authAPI.login(email, password, rememberMe).then(Response => { //axios отдельной функцией
     if(Response.data.resultCode === 0) { //если с данными все в порядке то дистпатчим
       dispatch(getAuthUserData());
+    } else {  // если нет то диспатчим stopSubmit
+      //прекратить сабмит формы, если в форме что-то заполнено не верно то выводим ошибку
+      let message = Response.data.messages.length > 0 ? Response.data.messages[0] : "Some Error";
+      dispatch(stopSubmit("login", {_error: message}));
     }
   });
 };
