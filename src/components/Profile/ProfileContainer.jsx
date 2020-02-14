@@ -14,7 +14,7 @@ class ProfileContainer extends React.Component {
     /* в App.js в Route в path добавили параметр userId который отображается в props.match.params.userId */
     let userId = this.props.match.params.userId;
     if(!userId) {
-      userId = 5890; //id на сервере
+      userId = 5890; //свой id на сервере
     }
     this.props.getUserProfile(userId); //реализовали через thunk из пропсов в profile-reduser
     this.props.getStatus(userId);

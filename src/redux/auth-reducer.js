@@ -17,26 +17,41 @@ const authReducer = (state = initialState, action) => { //в action приход
     case SET_USER_DATA:
       return {
         ...state,
-        ...action.data,
-        isAuth: true
+        ...action.payload
       }
     default:
       return state;
   }
 };
 
-export const setAuthUserData = (data) => {
-  return { type: SET_USER_DATA, data: data }
+export const setAuthUserData = (userId, email, login, isAuth) => {
+  return { type: SET_USER_DATA, payload: {userId, email, login, isAuth} }
 }
 
 //thunk
-export const getAuthUserData = () => (dispatch) => { //функция которая возвращает другую функцию
+export const getAuthUserData = () => (dispatch) => { //функция возвращает другую функцию которая принимает метод диспатч
     authAPI.getMe().then(Response => { //axios отдельной функцией
       if(Response.data.resultCode === 0) {
-        let data = Response.data.data;
-        dispatch(setAuthUserData(data));
+        let {id, login, email} = Response.data.data;
+        dispatch(setAuthUserData(id, email, login, true));
       }
     });
+}
+
+export const login = (email, password, rememberMe) => (dispatch) => { //функция которая возвращает другую функцию
+  authAPI.login(email, password, rememberMe).then(Response => { //axios отдельной функцией
+    if(Response.data.resultCode === 0) { //если с данными все в порядке то дистпатчим
+      dispatch(getAuthUserData());
+    }
+  });
+};
+
+export const logout = () => (dispatch) => { //функция которая возвращает другую функцию
+  authAPI.logout().then(Response => { //axios отдельной функцией
+    if(Response.data.resultCode === 0) { //если с данными все в порядке то зануляем все данные
+      dispatch(setAuthUserData(null, null, null, false));
+    }
+  });
 }
 
 export default authReducer;

@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const instance = Axios.create({
-  withCredentials: true,
+  withCredentials: true, //цепляется cookies
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
   headers: {
     "API-KEY": "6946ff38-638a-4018-ac8b-6ecca0f18517"
@@ -45,7 +45,13 @@ export const profileAPI = {
 
 export const authAPI = {
   getMe() { //если залогинин то сетаем данные
-    return instance.get(`auth/me`)
+    return instance.get(`auth/me`);
   },
+  login(email, password, rememberMe = false) {
+    return instance.post(`auth/login`, { email, password, rememberMe });
+  },
+  logout() {
+    return instance.delete(`auth/login`);
+  }
 }
 
