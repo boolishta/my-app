@@ -1,9 +1,12 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { maxLengthCreator, required } from '../../../utils/validators/validator';
 import style from './MyPosts.module.css';
 import Post from './Post/Post';
-import { reduxForm, Field } from 'redux-form';
+import { Textarea } from '../../common/FormsControls/FormsControls';
 
 
+const maxLength10 = maxLengthCreator(10); // если > 10 символов то ошибка
 
 const MyPosts = (props) => {
 
@@ -21,7 +24,7 @@ const MyPosts = (props) => {
 const AddNewPostForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field name="newPostText" component="textarea"/>
+      <Field name="newPostText" component={Textarea} validate={ [required, maxLength10] } placeholder={"Post message"}/>
       <button>Add post</button>
     </form>)
 }

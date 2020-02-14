@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
-import Preloader from '../../Command/Preloader/Preloader';
+import Preloader from '../../common/Preloader/Preloader';
 import photoNull from '../../../assets/images/photo.png';
 import ProfileStatus from './ProfileStatus';
 
