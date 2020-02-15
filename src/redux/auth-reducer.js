@@ -31,11 +31,12 @@ export const setAuthUserData = (userId, email, login, isAuth) => {
 
 //thunk
 export const getAuthUserData = () => (dispatch) => { //функция возвращает другую функцию которая принимает метод диспатч
-    authAPI.getMe().then(Response => { //axios отдельной функцией
-      if(Response.data.resultCode === 0) { //если мы авторизованы то записываем данные id login email
-        let {id, login, email} = Response.data.data;
-        dispatch(setAuthUserData(id, email, login, true));
-      }
+    return authAPI.getMe()
+      .then(Response => { //axios отдельной функцией
+        if(Response.data.resultCode === 0) { //если мы авторизованы то записываем данные id login email
+          let {id, login, email} = Response.data.data;
+          dispatch(setAuthUserData(id, email, login, true));
+        }
     });
 }
 

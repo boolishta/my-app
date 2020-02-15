@@ -62,7 +62,7 @@ let mapStateToProps = (state) => { //пропы для Users.jsx, берем т�
 
 /* с помощью compose добавляем процессы, обработчики к UsersContainer */
 export default compose(
-  withAuthRedirect,
+  //withAuthRedirect, если не залогинин то переход на страницу регистрации login
   connect(mapStateToProps,
     { follow, unfollow, setCurrentPage, toggleFollowProgress, getUsers })
 ) (UsersContainer)

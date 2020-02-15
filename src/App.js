@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Route, withRouter } from 'react-router-dom';
 import './App.css';
 import DialogsConstainer from './components/Dialogs/DialogsContainer';
 import Friends from './components/Friends/Friends';
@@ -11,26 +11,47 @@ import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import { connect } from 'react-redux';
+import { initializeApp } from './redux/app-reducer';
+import { compose } from 'redux';
+import Preloader from './components/common/Preloader/Preloader';
 
-const App = (props) => {
-  return (
-  /* если url совпадает то Route рендерит страницу в path можно добавить параметры */
-      <div className='app-wrapper'>
-        <HeaderContainer />
-        <Navbar />
-        <div className='app-wrapper-content'>
-          <Route path='/dialogs'            render={ () => <DialogsConstainer store={props.store} /> } />
-          <Route path='/profile/:userId?'   render={ () => <ProfileContainer /> } />
-          <Route path='/musics'             render={ () => <Musics /> } />
-          <Route path='/news'               render={ () => <News /> } />
-          <Route path='/settings'           render={ () => <Settings /> } />
-          <Route path='/friends'            render={ () => <Friends /> } />
-          <Route path='/users'              render={ () => <UsersContainer /> } />
-          <Route path='/login'              render={ () => <Login /> } />
+class App extends Component {//классовая компонента, можем послать запрос на сервер
+
+  componentDidMount() {
+    this.props.initializeApp(); //thunki
+  }
+
+  render() {
+    if(!this.props.initialized) {
+      return <Preloader />
+    }
+    return (
+    /* если url совпадает то Route рендерит страницу в path можно добавить параметры */
+        <div className='app-wrapper'>
+          <HeaderContainer />
+          <Navbar />
+          <div className='app-wrapper-content'>
+            <Route path='/dialogs'            render={ () => <DialogsConstainer /> } />
+            <Route path='/profile/:userId?'   render={ () => <ProfileContainer /> } />
+            <Route path='/musics'             render={ () => <Musics /> } />
+            <Route path='/news'               render={ () => <News /> } />
+            <Route path='/settings'           render={ () => <Settings /> } />
+            <Route path='/friends'            render={ () => <Friends /> } />
+            <Route path='/users'              render={ () => <UsersContainer /> } />
+            <Route path='/login'              render={ () => <Login /> } />
+          </div>
         </div>
-      </div>
 
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateTiProps = (state) => ({
+  initialized: state.app.initialized
+})
+
+/* оборачиваем в withRouter и connect */
+export default compose(
+  withRouter,
+  connect(mapStateTiProps, { initializeApp })) (App);

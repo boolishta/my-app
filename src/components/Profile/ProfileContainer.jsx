@@ -15,6 +15,9 @@ class ProfileContainer extends React.Component {
     let userId = this.props.match.params.userId;
     if(!userId) {
       userId = this.props.autorizedUserId; //мой id из state
+      if(!userId) {//если нет UserId то переходим на страницу login
+        this.props.history.push("/login");
+      }
     }
     this.props.getUserProfile(userId); //реализовали через thunk из пропсов в profile-reduser
     this.props.getStatus(userId);
