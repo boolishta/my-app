@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './ProfileStatus.module.css';
 
 const ProfileStatusWithHooks = (props) => {
@@ -8,6 +8,10 @@ const ProfileStatusWithHooks = (props) => {
    2 - функция которая меняет значение false */
    let [editMode, setEditMode] = useState(false); //если true то отображается input, если false то статус
    let [status, setStatus] = useState(props.status);
+
+   useEffect( () => {
+    setStatus(props.status);
+   }, [props.status]); //функция выполнится после отрисовки компоненты, вторым значением вводим зависимость от статуса, если изменился то запускаем useEffect
 
   const activateEditMode = () => { //при двойном клике меняем editMode на true
     setEditMode(true);
