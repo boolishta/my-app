@@ -2,3 +2,14 @@ mapStateToProps = (state) => ({
   ...,
   users: state.users.items.filter(...)
 })
+
+react-redux -> connect
+
+let initialState = {
+  fake: 10
+}
+const reducer = (state = initialState, action) => {
+  switch(action.type) {
+    case "FAKE": return {...state, fake: state.fake + 1}
+  }
+}
