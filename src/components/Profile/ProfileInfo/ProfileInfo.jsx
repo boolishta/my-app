@@ -1,8 +1,8 @@
 import React from 'react';
-import style from './ProfileInfo.module.css';
-import Preloader from '../../common/Preloader/Preloader';
 import photoNull from '../../../assets/images/photo.png';
-import ProfileStatus from './ProfileStatus';
+import Preloader from '../../common/Preloader/Preloader';
+import style from './ProfileInfo.module.css';
+import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
 const ProfileInfo = (props) => {
   /* станица рендерится сразу не дожидаясь данных, поэтому если в profile ничего нет (в profile-reducer в profile записан null)
@@ -18,7 +18,7 @@ const ProfileInfo = (props) => {
       <div className={style.profile}>
         <div className={style.profileAvatar}>
           <img className={style.avatar} src={ photoLarge ? photoLarge : photoNull }  alt=""/>
-          <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+          <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
         </div>
         <div className={style.profileDescription}>
           <p><strong>Full Name:</strong> {props.profile.fullName}</p>

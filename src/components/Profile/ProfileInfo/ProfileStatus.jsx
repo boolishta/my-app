@@ -1,11 +1,11 @@
 import React from 'react';
 import style from './ProfileStatus.module.css';
 
-class ProfileStatus extends React.Component {
+class ProfileStatus extends React.Component { //классовая компонента
 
   /* создаем локальный state */
   state = {
-    editMode: false, //если false то нельзя редактировать, если true то можно редактировать
+    editMode: false, //если true то можно редактировать
     status: this.props.status
   }
 
