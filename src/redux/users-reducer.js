@@ -77,11 +77,12 @@ export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isF
 export const toggleFollowProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId }); //дисаблим кнопку folow/unfollow
 
 //создаем thunk
-export const getUsers = (currentPage, pagesSize) => {
+export const requestUsers = (page, pageSize) => {
   return (dispatch) => {
     dispatch(toggleIsFetching(true)); //когда посылаем запрос показываем индикатор загрузки
+    dispatch(setCurrentPage(page)); //выделять отобрадаемую страницу в users
     /* axios вынесли отдельной функцией в api.js */
-    usersAPI.getUsers(currentPage, pagesSize).then(data => {
+    usersAPI.getUsers(page, pageSize).then(data => {
       dispatch(toggleIsFetching(false)); //когда получаем ответ убираем индикатор загрузки
       dispatch(setUsers(data.items)); //отправляем из компоненты в state с помощью setUsers которая приходит через пропсы из mapDisatchToProps
       dispatch(setTotalUsersCount(data.totalCount)); //отправляем из компоненты в state

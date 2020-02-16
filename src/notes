@@ -1,0 +1,4 @@
+mapStateToProps = (state) => ({
+  ...,
+  users: state.users.items.filter(...)
+})
