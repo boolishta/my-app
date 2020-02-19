@@ -1,6 +1,8 @@
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 
+/* аналог стора от редакса */
+
 let store ={
   _state: {
     profilePage: {

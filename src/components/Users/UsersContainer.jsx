@@ -12,27 +12,29 @@ import { getPageSize, getUsers, getTotalUsersCount, getCurrentPage, getIsFetchin
 class UsersContainer extends React.Component {
   //запросы на сервер
   componentDidMount() { //данный метод вызывается сразу как компонента отрисуется (вставка в DOM)
-    this.props.getUsers(this.props.currentPage, this.props.pagesSize);
+    const { currentPage, pagesSize } = this.props; //деструктуризация
+    this.props.getUsers(currentPage, pagesSize);
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.getUsers(pageNumber, this.props.pagesSize);
+    const { pagesSize } = this.props;
+    this.props.getUsers(pageNumber, pagesSize);
   }
 
   render() {
     //передаем пропсы в Users только те которые нужны этой компоненте
     //пропсы получаем через connect
     return <>
-      { this.props.isFetching ?
-      <Preloader /> : null }
+      {this.props.isFetching ?
+        <Preloader /> : null}
       <Users totalUsersCount={this.props.totalUsersCount}
-            pagesSize={this.props.pagesSize}
-            currentPage={this.props.currentPage}
-            onPageChanged={this.onPageChanged}
-            users={this.props.users}
-            follow={this.props.follow}
-            unfollow={this.props.unfollow}
-            followingInProgress={this.props.followingInProgress}/>
+        pagesSize={this.props.pagesSize}
+        currentPage={this.props.currentPage}
+        onPageChanged={this.onPageChanged}
+        users={this.props.users}
+        follow={this.props.follow}
+        unfollow={this.props.unfollow}
+        followingInProgress={this.props.followingInProgress} />
     </>
   }
 };
@@ -63,15 +65,15 @@ let mapStateToProps = (state) => { //пропы для Users.jsx, берем т�
   }
 };
 
-  /* let mapDispatchToProps = (dispatch) => { // пропсы, все колбэки которые диспатчат в state/store, объект создаем с помощью action creator
-  return {
-    follow: (userId) => { dispatch(followAC(userId)); },
-    unfollow: (userId) => { dispatch(unfollowAC(userId)); },
-    setUsers: (users) => { dispatch(setUsersAC(users));} ,//диспатчим вызов AC: объект
-    setCurrentPage: (pageNumber) => { dispatch(setCurrentPageAC(pageNumber)); },
-    setTotalUsersCount: (totalCount) => { dispatch(setTotalUsersCountAC(totalCount)) },
-    toggleIsFetching: (isFetching) => { dispatch(toggleIsFetchingAC(isFetching)); }
-  }}; */
+/* let mapDispatchToProps = (dispatch) => { // пропсы, все колбэки которые диспатчат в state/store, объект создаем с помощью action creator
+return {
+  follow: (userId) => { dispatch(followAC(userId)); },
+  unfollow: (userId) => { dispatch(unfollowAC(userId)); },
+  setUsers: (users) => { dispatch(setUsersAC(users));} ,//диспатчим вызов AC: объект
+  setCurrentPage: (pageNumber) => { dispatch(setCurrentPageAC(pageNumber)); },
+  setTotalUsersCount: (totalCount) => { dispatch(setTotalUsersCountAC(totalCount)) },
+  toggleIsFetching: (isFetching) => { dispatch(toggleIsFetchingAC(isFetching)); }
+}}; */
 
 
 /* с помощью compose добавляем процессы, обработчики к UsersContainer */
@@ -79,4 +81,4 @@ export default compose(
   //withAuthRedirect, если не залогинин то переход на страницу регистрации login
   connect(mapStateToProps,
     { follow, unfollow, setCurrentPage, toggleFollowProgress, getUsers: requestUsers })
-) (UsersContainer)
+)(UsersContainer)

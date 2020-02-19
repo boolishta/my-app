@@ -3,10 +3,10 @@ import style from './ProfileStatus.module.css';
 
 const ProfileStatusWithHooks = (props) => {
 
-  /* функция useState возвращает массив из двух элементов:
+  /* функция useState (hook) возвращает массив из двух элементов:
    1 - это значение которое передали: false
    2 - функция которая меняет значение false */
-   let [editMode, setEditMode] = useState(false); //если true то отображается input, если false то статус
+   let [editMode, setEditMode] = useState(false); //локальный state, если true то отображается input, если false то span
    let [status, setStatus] = useState(props.status);
 
    useEffect( () => {

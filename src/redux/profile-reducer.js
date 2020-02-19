@@ -61,29 +61,20 @@ export const deletePost = (postId) => ({ type: DELETE_POST, postId });
 
 
 //thunk
-export const getUserProfile = (userId) => {
-  return (dispatch) => {
-    usersAPI.getProfile(userId).then(Response => { //в Response.data приходит объект
-      dispatch(setUserProfile(Response.data)); //отправляем из компоненты в state с помощью setProfile которая приходит через пропсы из mapDisatchToProps
-    });
-  }
+export const getUserProfile = (userId) => async (dispatch) => {
+    const Response = await usersAPI.getProfile(userId);
+    dispatch(setUserProfile(Response.data)); //отправляем из компоненты в state с помощью setProfile которая приходит через пропсы из mapDisatchToProps
 }
 
-export const getStatus = (userId) => {
-  return (dispatch) => {
-    profileAPI.getStatus(userId).then(Response => {
-      dispatch(setStatus(Response.data));
-    });
-  }
+export const getStatus = (userId) => async (dispatch) => {
+    const Response = await profileAPI.getStatus(userId); // в response резальтат которым зарезолвится промис
+    dispatch(setStatus(Response.data));
 }
 
-export const updateStatus = (status) => {
-  return (dispatch) => {
-    profileAPI.updateStatus(status).then(Response => {
-      if(Response.data.resultCode === 0) {
-        dispatch(setStatus(status));
-      }
-    });
+export const updateStatus = (status) => async (dispatch) => {
+  const Response = await profileAPI.updateStatus(status);
+  if (Response.data.resultCode === 0) {
+    dispatch(setStatus(status));
   }
 }
 

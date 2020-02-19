@@ -1,0 +1,12 @@
+.selectedPage{
+  font-weight: bold;
+  font-size: 18px;
+}
+.pagination{
+  width: 990px;
+  cursor: pointer;
+  margin: 8px;
+}
+.pagination span{
+  margin-right: 7px;
+}

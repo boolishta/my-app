@@ -10,6 +10,7 @@ const Post = (props) => {
       <div className={style.message}>
         <img src={userPhoto} alt="" />
         <div>{props.message}</div>
+        <button className={style.deletePost}>x</button>
       </div>
       <div>like: {props.likesCount}</div>
     </div>
