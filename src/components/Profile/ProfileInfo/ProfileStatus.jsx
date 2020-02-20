@@ -29,7 +29,7 @@ class ProfileStatus extends React.Component { //классовая компон�
   }
 
   componentDidUpdate(prevProps, prevState) { //обновление компоненты, срабатывает при любом изменении пропсов или state
-    if(prevProps.status !== this.props.status) {
+    if (prevProps.status !== this.props.status) {
       this.setState({
         status: this.props.status
       })
@@ -41,12 +41,12 @@ class ProfileStatus extends React.Component { //классовая компон�
       <div className={style.profileStatus}>
         {!this.state.editMode &&
           <div>
-            <span onDoubleClick={ this.activateEditMode }>{this.props.status || "Change your status"}</span>
+            <span onDoubleClick={this.activateEditMode}>{this.props.status || "Change your status"}</span>
           </div>
         }
         {this.state.editMode &&
           <div>
-            <input onChange={this.onStatusChange} autoFocus={true} onBlur={ this.deactivateEditMode } value={this.state.status} />
+            <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateEditMode} value={this.state.status} />
           </div>
         }
       </div>
