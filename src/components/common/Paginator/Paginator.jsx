@@ -16,22 +16,25 @@ let Paginator = ({ totalItemsCount, pagesSize, currentPage, onPageChanged, porti
   let [portionNumber, setPortionNumber] = useState(1);
   let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
   let rightPortionPageNumber = portionNumber * portionSize;
-/* не появляется кнопка PREV */
+  /* если страница последняя то задисеблить кнопку next */
   return (
     <div className={style.pagination}>
-      { portionNumber > 1 &&
-        <button onClick={ () => {setPortionNumber(portionNumber - 1) }}>PREV</button>
+      {portionNumber === 1 &&
+        <button disabled>PREV</button>}
+      {portionNumber > 1 &&
+        <button onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button>
       }
-        {pages
+      {pages
         .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
-        .map( (p) => {
-          return <span className={ cn({
-            [style.selectedPage]: currentPage === p }, style.pageNumber )}
-              key={p}
-              onClick={ (e) => { onPageChanged(p); } }>{p}</span>
+        .map((p) => {
+          return <span className={cn({
+            [style.selectedPage]: currentPage === p
+          }, style.pageNumber)}
+            key={p}
+            onClick={(e) => { onPageChanged(p); }}>{p}</span>
         })
       }
-      { portionCount > portionNumber &&
+      {portionCount > portionNumber &&
         <button onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button>
       }
     </div>
