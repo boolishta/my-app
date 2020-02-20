@@ -4,10 +4,11 @@ import User from './User';
 
 /* Презентационная компонента, только принимает пропсы и возвращает jsx разметку - чистая функция*/
 
-let Users = ({currentPage, onPageChanged, totalUsersCount, pagesSize, users, ...props}) => {
+let Users = ({currentPage, onPageChanged, pagesSize, users, totalUsersCount, ...props}) => {
+  
   return (
     <div>
-      <Paginator currentPage={currentPage} onPageChanged={onPageChanged} totalUsersCount={totalUsersCount} pagesSize={pagesSize}/>
+      <Paginator currentPage={currentPage} onPageChanged={onPageChanged} totalItemsCount={totalUsersCount} pagesSize={pagesSize}/>
       { users.map(u => <User user={u} key={u.id} followingInProgress={props.followingInProgress} unfollow={props.unfollow} follow={props.follow}/>) }
     </div>
   )
