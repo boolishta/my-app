@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter, BrowserRouter } from 'react-router-dom';
+import { Route, withRouter, HashRouter } from 'react-router-dom';
 import './App.css';
 import Friends from './components/Friends/Friends';
 import Musics from './components/Musics/Music';
@@ -60,11 +60,11 @@ const AppContainer = compose(
   connect(mapStateTiProps, { initializeApp }))(App);
 
 const MainApp = (props) => {
-  return <BrowserRouter>
+  return <HashRouter >
     <Provider store={store}>
       <AppContainer />
     </Provider>
-  </BrowserRouter>
+  </HashRouter>
 }
 
 export default MainApp;
