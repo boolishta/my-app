@@ -20,7 +20,7 @@ describe("ProfileStatus component", () => {
     const component = create(<ProfileStatus status="it-kamasutra" />);
     const root = component.root;
     expect(() => {
-      let input = root.findByType("input");
+      root.findByType("input");
     }).toThrow();
   });
 

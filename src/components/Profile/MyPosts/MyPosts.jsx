@@ -14,7 +14,7 @@ const MyPosts = React.memo( (props) => { //React.memo оборачивает к�
   //   return nextProps !== this.props || nextState !== this.state; //вернем true если props или state изменился
   // }
 
-    let postsElements = props.posts.map( e => <Post message={e.message} likesCount={e.likesCount}/>);
+    let postsElements = props.posts.map( e => <Post key={e.id} message={e.message} likesCount={e.likesCount}/>);
     const onAddPost = (values) => { props.addPost(values.newPostText); }; //диспатчим текст из формы
     return (
       <div className = { style.posts }>

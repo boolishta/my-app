@@ -1,9 +1,11 @@
 import { usersAPI, profileAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
 
 let initialState = {
   posts: [
@@ -49,6 +51,11 @@ const profileReducer = (state = initialState, action) => {
         ...state, posts: state.posts.filter(p => p.id !== action.postId) //возвращается копия state в которой мы posts возьмем старые посты и отфильтруем по id только те посты которые не равны action.postId
       }
     }
+    case SAVE_PHOTO_SUCCESS: {
+      return {
+        ...state, profile: { ...state.profile, photos: action.photos }
+      }
+    }
     default:
       return state;
   }
@@ -58,6 +65,7 @@ export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostTe
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
 export const deletePost = (postId) => ({ type: DELETE_POST, postId });
+export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
 
 
 //thunk
@@ -75,6 +83,24 @@ export const updateStatus = (status) => async (dispatch) => {
   const Response = await profileAPI.updateStatus(status);
   if (Response.data.resultCode === 0) {
     dispatch(setStatus(status));
+  }
+}
+
+export const savePhoto = (file) => async (dispatch) => {
+  const Response = await profileAPI.savePhoto(file);
+  if (Response.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(Response.data.data.photos));
+  }
+}
+export const saveProfile = (profile) => async (dispatch, getState) => {
+  let userId = getState().auth.userId;
+  const Response = await profileAPI.saveProfile(profile);
+  if (Response.data.resultCode === 0) {
+    dispatch(getUserProfile(userId));
+  } else {
+    dispatch(stopSubmit("edit-profile", {_error: Response.data.messages[0]})); //покажет общую ошибку
+    return Promise.reject(Response.data.messages[0]);
+    //dispatch(stopSubmit("edit-profile", { "contacts": {"facebook": Response.data.messages[0]} })); //покажет ошибку в строке facebook
   }
 }
 
